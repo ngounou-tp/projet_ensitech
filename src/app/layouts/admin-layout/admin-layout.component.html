@@ -1,0 +1,17 @@
+
+<div class="wrapper">
+  <div class="sidebar" data-color="blue" data-image="">
+      <app-sidebar></app-sidebar>
+      <div class="sidebar-background" style="background-image: url(assets/img/sidebar-4.jpg)"></div>
+  </div>
+
+  <div class="main-panel">
+   
+      <navbar-cmp style="height: 15vh"></navbar-cmp>
+      <div style="height: 75vh"> <router-outlet></router-outlet></div>
+      <div *ngIf="isMap('maps')" style="height: 10vh">
+          <footer-cmp></footer-cmp>
+      </div>
+  </div>
+
+</div>

@@ -1,0 +1,15 @@
+.modal-header, .modal-footer {
+    background-color: #f8f9fa;
+  }
+  
+  .modal-title {
+    font-weight: bold;
+  }
+
+  .modal-backdrop {
+    opacity: 0 !important;
+    display: none !important;
+  }
+  .modal {
+    z-index: 3000 !important; /* Ensure the modal is above the backdrop */
+  }

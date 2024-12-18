@@ -1,0 +1,36 @@
+        
+            <div style="margin: 20px;">
+                <h3 class="card-title">Liste des Enseignants</h3>
+                <div class="table-responsive">
+                    <table class="table table-bordered table-striped" style="margin-top: 10px; table-layout: auto; width: 70vw">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Nom</th>
+                                <th>Prénom</th>
+                                <th>Email</th>
+                                <th>Téléphone</th>
+                                <th>Spécialité</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let enseignant of enseignants">
+                                <td>
+                                    <input type="checkbox" [id]="'enseignant-' + enseignant.id">
+                                </td>
+                                <td>{{ enseignant.nom }}</td>
+                                <td>{{ enseignant.prenom }}</td>
+                                <td>{{ enseignant.email }}</td>
+                                <td>{{ enseignant.telephone }}</td>
+                                <td>{{ enseignant.specialite }}</td>
+                                <td>
+                                    <button class="btn btn-sm btn-primary" (click)="editEnseignant(enseignant)"><span class="pe-7s-pen"></span></button>
+                                    <button class="btn btn-sm btn-danger" (click)="deleteEnseignant(enseignant.id)"><span class="pe-7s-trash"></span></button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+      
