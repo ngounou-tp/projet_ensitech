@@ -1,1 +1,72 @@
-<p>etudiant works!</p>
+<div style="margin: 20px;">
+    <div class="d-flex align-items-center justify-content-between">
+      <div></div>
+      <div>
+        <button class="btn btn-success mb-3" (click)="resetSelectedEtudiant(); openModal()">Ajouter Étudiant</button>
+      </div>
+    </div>
+    <table class="table table-bordered table-striped" style="margin-top: 10px; table-layout: auto; width: 75vw">
+      <thead>
+        <tr>
+          <th style="white-space: nowrap;">#</th>
+          <th style="white-space: nowrap;">Nom</th>
+          <th style="white-space: nowrap;">Prénom</th>
+          <th style="white-space: nowrap;">Email</th>
+          <th style="white-space: nowrap;">Téléphone</th>
+          <th style="white-space: nowrap;">Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let etudiant of etudiantList">
+          <td style="white-space: nowrap;">{{ etudiant.id }}</td>
+          <td style="white-space: nowrap;">{{ etudiant.nom }}</td>
+          <td style="white-space: nowrap;">{{ etudiant.prenom }}</td>
+          <td style="white-space: nowrap;">{{ etudiant.email }}</td>
+          <td style="white-space: nowrap;">{{ etudiant.telephone }}</td>
+          <td style="white-space: nowrap;">
+            <button class="btn btn-sm btn-primary" (click)="editEtudiant(etudiant); openModal()">
+              <span class="pe-7s-pen"></span>
+            </button>
+            <span style="width: 4px;"></span>
+            <button class="btn btn-sm btn-danger" (click)="deleteEtudiant(etudiant.id)">
+              <span class="pe-7s-trash"></span>
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  
+  <!-- Modal -->
+  <div class="modal" id="etudiantModal" aria-labelledby="etudiantModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="etudiantModalLabel">{{ selectedEtudiant?.id ? 'Modifier Étudiant' : 'Ajouter Étudiant' }}</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form (ngSubmit)="selectedEtudiant?.id ? updateEtudiant() : createEtudiant(selectedEtudiant)">
+            <div class="form-group">
+              <label for="nom">Nom</label>
+              <input *ngIf="selectedEtudiant" type="text" class="form-control" id="nom" [(ngModel)]="selectedEtudiant.nom" name="nom" required>
+            </div>
+            <div class="form-group">
+              <label for="prenom">Prénom</label>
+              <input *ngIf="selectedEtudiant" type="text" class="form-control" id="prenom" [(ngModel)]="selectedEtudiant.prenom" name="prenom" required>
+            </div>
+            <div class="form-group">
+              <label for="email">Email</label>
+              <input *ngIf="selectedEtudiant" type="email" class="form-control" id="email" [(ngModel)]="selectedEtudiant.email" name="email" required>
+            </div>
+            <div class="form-group">
+              <label for="telephone">Téléphone</label>
+              <input *ngIf="selectedEtudiant" type="text" class="form-control" id="telephone" [(ngModel)]="selectedEtudiant.telephone" name="telephone" required>
+            </div>
+            <button type="submit" class="btn btn-primary mt-3">{{ selectedEtudiant?.id ? 'Mettre à jour' : 'Ajouter' }}</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+  

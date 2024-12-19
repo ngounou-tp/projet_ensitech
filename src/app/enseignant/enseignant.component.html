@@ -1,36 +1,80 @@
-        
-            <div style="margin: 20px;">
-                <h3 class="card-title">Liste des Enseignants</h3>
-                <div class="table-responsive">
-                    <table class="table table-bordered table-striped" style="margin-top: 10px; table-layout: auto; width: 70vw">
-                        <thead>
-                            <tr>
-                                <th>#</th>
-                                <th>Nom</th>
-                                <th>Prénom</th>
-                                <th>Email</th>
-                                <th>Téléphone</th>
-                                <th>Spécialité</th>
-                                <th>Actions</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr *ngFor="let enseignant of enseignants">
-                                <td>
-                                    <input type="checkbox" [id]="'enseignant-' + enseignant.id">
-                                </td>
-                                <td>{{ enseignant.nom }}</td>
-                                <td>{{ enseignant.prenom }}</td>
-                                <td>{{ enseignant.email }}</td>
-                                <td>{{ enseignant.telephone }}</td>
-                                <td>{{ enseignant.specialite }}</td>
-                                <td>
-                                    <button class="btn btn-sm btn-primary" (click)="editEnseignant(enseignant)"><span class="pe-7s-pen"></span></button>
-                                    <button class="btn btn-sm btn-danger" (click)="deleteEnseignant(enseignant.id)"><span class="pe-7s-trash"></span></button>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
+<div style="margin: 20px;">
+    <div class="d-flex align-items-center justify-content-between">
+      <div></div>
+      <div>
+        <button class="btn btn-success mb-3" (click)="resetSelectedEnseignant(); openModal()">Ajouter Enseignant</button>
+      </div>
+    </div>
+    
+    <table class="table table-bordered table-striped" style="margin-top: 10px; table-layout: auto; width: 75vw">
+      <thead>
+        <tr>
+          <th style="white-space: nowrap;">#</th>
+          <th style="white-space: nowrap;">Nom</th>
+          <th style="white-space: nowrap;">Email</th>
+          <th style="white-space: nowrap;">Téléphone</th>
+          <th style="white-space: nowrap;">Cours</th>
+          <th style="white-space: nowrap;">Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let enseignant of enseignantList">
+          <td style="white-space: nowrap;">
+            <input type="checkbox" [id]="'enseignant-' + enseignant.id">
+          </td>
+          <td style="white-space: nowrap;">{{ enseignant.nom }}</td>
+          <td style="white-space: nowrap;">{{ enseignant.email }}</td>
+          <td style="white-space: nowrap;">{{ enseignant.telephone }}</td>
+          <td style="white-space: nowrap;">{{ enseignant.cours?.intitule || 'Non assigné' }}</td>
+          <td style="white-space: nowrap;">
+            <button class="btn btn-sm btn-primary" (click)="editEnseignant(enseignant); openModal()">
+              <span class="pe-7s-pen"></span>
+            </button>
+            <span style="width: 4px;"></span>
+            <button class="btn btn-sm btn-danger" (click)="deleteEnseignant(enseignant.id)">
+              <span class="pe-7s-trash"></span>
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>        
+  </div>
+  
+  <div class="modal" id="enseignantModal" aria-labelledby="enseignantModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="enseignantModalLabel">{{ selectedEnseignant?.id ? 'Modifier l\'Enseignant' : 'Ajouter un Enseignant' }}</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form (ngSubmit)="selectedEnseignant?.id ? updateEnseignant() : createEnseignant(selectedEnseignant)">
+            <div class="form-group">
+              <label for="nom">Nom</label>
+              <input *ngIf="selectedEnseignant" type="text" class="form-control" id="nom"
+                     [(ngModel)]="selectedEnseignant.nom" name="nom" required>
             </div>
-      
+            <div class="form-group">
+              <label for="email">Email</label>
+              <input *ngIf="selectedEnseignant" type="email" class="form-control" id="email"
+                     [(ngModel)]="selectedEnseignant.email" name="email" required>
+            </div>
+            <div class="form-group">
+              <label for="telephone">Téléphone</label>
+              <input *ngIf="selectedEnseignant" type="text" class="form-control" id="telephone"
+                     [(ngModel)]="selectedEnseignant.telephone" name="telephone" required>
+            </div>
+            <div class="form-group">
+              <label for="cours">Cours</label>
+              <select *ngIf="selectedEnseignant" class="form-control" id="cours"
+                      [(ngModel)]="selectedEnseignant.cours" name="cours">
+                <option *ngFor="let cours of coursList" [ngValue]="cours">{{ cours.intitule }}</option>
+              </select>
+            </div>
+            <button type="submit" class="btn btn-primary mt-3">{{ selectedEnseignant?.id ? 'Mettre à jour' : 'Ajouter' }}</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+  

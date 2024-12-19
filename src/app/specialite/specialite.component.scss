@@ -1,0 +1,30 @@
+
+.table {
+      margin-top: 10px;
+      table-layout: auto;
+      width: auto;
+      max-width: 100%;
+    }
+  
+    .table th, .table td {
+      white-space: normal; /* Allow text to wrap */
+    }
+  
+    .table td {
+      max-width: 200px;
+      overflow: hidden;
+      word-wrap: break-word;
+      word-break: break-word;
+    }
+  
+    ul {
+      margin: 0;
+      padding: 0;
+      list-style-type: none;
+    }
+  
+    .btn + .btn {
+      margin-left: 5px;
+    }
+
+  

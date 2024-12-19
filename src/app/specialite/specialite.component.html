@@ -1,1 +1,92 @@
-<p>specialite works!</p>
+<div style="margin: 20px;">
+    <div class="d-flex align-items-center justify-content-between">
+      <div></div>
+      <div>
+        <button class="btn btn-success mb-3" (click)="resetSelectedFormation(); openModal()">Ajouter Formation</button>
+      </div>
+    </div>
+    
+    <table class="table table-bordered table-striped" style="margin-top: 10px; table-layout: auto; width: auto; max-width: 100%;">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Nom</th>
+          <th>Description</th>
+          <th>Frais</th>
+          <th>Durée</th>
+          <th>Sanction</th>
+          <th>Cours</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let formation of formationList">
+          <td>{{ formation.id }}</td>
+          <td>{{ formation.nom }}</td>
+          <td style="max-width: 200px; overflow: hidden; word-wrap: break-word; word-break: break-word;">
+            {{ formation.description }}
+          </td>
+          <td>{{ formation.frais }} €</td>
+          <td>{{ formation.duree }}</td>
+          <td>{{ formation.sanction }}</td>
+          <td>
+            <ul style="margin: 0; padding: 0; list-style-type: none;">
+              <li *ngFor="let cours of formation.cours">{{ cours.intitule }}</li>
+            </ul>
+          </td>
+          <td>
+            <button class="btn btn-sm btn-primary" (click)="editFormation(formation); openModal()">
+              <span class="pe-7s-pen"></span>
+            </button>
+            <button class="btn btn-sm btn-danger" style="margin-left: 5px;" (click)="deleteFormation(formation.id)">
+              <span class="pe-7s-trash"></span>
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  
+  <div class="modal" id="formationModal" aria-labelledby="formationModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="formationModalLabel">{{ selectedFormation?.id ? 'Modifier la Formation' : 'Ajouter une Formation' }}</h5>
+          <button type="button" class="btn-close" (click)="closeModal()" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form (ngSubmit)="selectedFormation?.id ? updateFormation() : createFormation()">
+            <div class="form-group">
+              <label for="nom">Nom</label>
+              <input *ngIf="selectedFormation" type="text" class="form-control" id="nom" [(ngModel)]="selectedFormation.nom" name="nom" required>
+            </div>
+            <div class="form-group">
+              <label for="description">Description</label>
+              <textarea *ngIf="selectedFormation" class="form-control" id="description" [(ngModel)]="selectedFormation.description" name="description" required></textarea>
+            </div>
+            <div class="form-group">
+              <label for="frais">Frais (€)</label>
+              <input *ngIf="selectedFormation" type="number" class="form-control" id="frais" [(ngModel)]="selectedFormation.frais" name="frais" required>
+            </div>
+            <div class="form-group">
+              <label for="duree">Durée</label>
+              <input *ngIf="selectedFormation" type="text" class="form-control" id="duree" [(ngModel)]="selectedFormation.duree" name="duree" required>
+            </div>
+            <div class="form-group">
+              <label for="sanction">Sanction</label>
+              <input *ngIf="selectedFormation" type="text" class="form-control" id="sanction" [(ngModel)]="selectedFormation.sanction" name="sanction" required>
+            </div>
+            <div class="form-group">
+              <label for="cours">Cours</label>
+              <select *ngIf="selectedFormation" class="form-control" id="cours" name="cours" multiple [(ngModel)]="selectedFormation.cours">
+                <option *ngFor="let cours of coursList" [ngValue]="cours">{{ cours.intitule }}</option>
+              </select>
+            </div>
+            <button type="submit" class="btn btn-primary mt-3">{{ selectedFormation?.id ? 'Mettre à jour' : 'Ajouter' }}</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  

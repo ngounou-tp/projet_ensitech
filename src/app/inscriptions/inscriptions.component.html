@@ -1,1 +1,115 @@
-<p>inscriptions works!</p>
+<div class="container mt-4">
+    <div class="d-flex align-items-center justify-content-between mb-4">
+        <div></div>
+        <div>
+            <button class="btn btn-success" (click)="openModal()">Ajouter  Inscription</button>       
+         </div>
+    </div> 
+    <table class="table table-bordered">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Etudiant</th>
+          <th>Formation</th>
+          <th>Date d'Inscription</th>
+          <th>Amount Paid</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let inscription of inscriptionList">
+          <td>{{ inscription.id }}</td>
+          <td>{{ getEtudiantName(inscription.etudiantId) }}</td>
+          <td>{{ getFormationTitle(inscription.formationId) }}</td>
+          <td>{{ inscription.dateInscription }}</td>
+          <td>{{ inscription.amountPaid | currency }}</td>
+          <td>
+            <button class="btn btn-primary btn-sm" (click)="editInscription(inscription)">Edit</button>
+            <button class="btn btn-danger btn-sm" (click)="deleteInscription(inscription.id)">Delete</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    
+    <!-- Modal -->
+    <div class="modal" id="inscriptionModal" tabindex="-1">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Inscription</h5>
+            <button type="button" class="btn-close" (click)="closeModal()"></button>
+          </div>
+          <div class="modal-body">
+            <form>
+              <div class="mb-3">
+                <label for="etudiantSelect" class="form-label">Etudiant</label>
+                <select
+                  id="etudiantSelect"
+                  class="form-select"
+                  [(ngModel)]="selectedInscription.etudiantId"
+                  name="etudiant"
+                >
+                  <option *ngFor="let etudiant of etudiantList" [value]="etudiant.id">
+                    {{ etudiant.nom }} {{ etudiant.prenom }}
+                  </option>
+                </select>
+              </div>
+              <div class="mb-3">
+                <label for="formationSelect" class="form-label">Formation</label>
+                <select
+                  id="formationSelect"
+                  class="form-select"
+                  [(ngModel)]="selectedInscription.formationId"
+                  name="formation"
+                >
+                  <option *ngFor="let formation of formations" [value]="formation.id">
+                    {{ formation.title }}
+                  </option>
+                </select>
+              </div>
+              <div class="mb-3">
+                <label for="dateInscription" class="form-label">Date d'Inscription</label>
+                <input
+                  id="dateInscription"
+                  type="date"
+                  class="form-control"
+                  [(ngModel)]="selectedInscription.dateInscription"
+                  name="dateInscription"
+                />
+              </div>
+              <div class="mb-3">
+                <label for="amountPaid" class="form-label">Amount Paid</label>
+                <input
+                  id="amountPaid"
+                  type="number"
+                  class="form-control"
+                  [(ngModel)]="selectedInscription.amountPaid"
+                  name="amountPaid"
+                />
+              </div>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" (click)="closeModal()">Close</button>
+            <button
+              *ngIf="!selectedInscription.id"
+              type="button"
+              class="btn btn-primary"
+              (click)="createInscription(selectedInscription)"
+            >
+              Save
+            </button>
+            <button
+              *ngIf="selectedInscription.id"
+              type="button"
+              class="btn btn-primary"
+              (click)="updateInscription()"
+            >
+              Update
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  

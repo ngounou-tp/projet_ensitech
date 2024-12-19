@@ -17,7 +17,7 @@ export const AdminLayoutRoutes: Routes = [
     { path: 'inscription',    component: InscriptionsComponent },
     { path: 'etudiants',      component: EtudiantComponent  },
     { path: 'enseignants',      component: EnseignantComponent  },
-    { path: 'specialites',      component: SpecialiteComponent  },
+    { path: 'formations',      component: SpecialiteComponent  },
     { path: 'cours',           component: CoursComponent },
     { path: 'user',           component: UserComponent },
     { path: 'table',          component: TablesComponent },
